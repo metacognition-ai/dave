@@ -31,11 +31,24 @@ def close_chrome() -> None:
     call(["killall", "Google Chrome"])
 
 
+def open_pcap(path: str, filters: str) -> None:
+    call(
+        [
+            "/Applications/Wireshark.app/Contents/MacOS/Wireshark",
+            "-r",
+            path,
+            "-Y",
+            f"{filters}",
+        ]
+    )
+
+
 def handle_client(conn, addr):
     with conn:
         print("Connected by", addr)
         while True:
             data = conn.recv(1024)
+            print("got data", data.split(b" "))
             if not data:
                 break
             if data == b"open_wireshark":
@@ -48,6 +61,14 @@ def handle_client(conn, addr):
                 ).start()
             elif data == b"close_chrome":
                 threading.Thread(target=close_chrome).start()
+            elif data.startswith(b"open_pcap"):
+                filters = b" ".join(data.split(b" ")[2:])
+                print("filters", filters)
+                threading.Thread(
+                    target=open_pcap,
+                    args=(data.split(b" ")[1].decode(), filters.decode()),
+                ).start()
+
             conn.sendall(b"Command executed")
 
 

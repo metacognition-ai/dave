@@ -22,8 +22,21 @@ def run_command(command: str) -> str:
     )
 
 
-def filter_cap() -> str:
-    pass
+def filter_cap(path: str, filters: str) -> str:
+    """
+    Open wireshark on host machine and with filters
+    """
+    # open wireshark on host with pcap path
+    _send_command(f"open_pcap {path} {filters}")
+
+    # ample filters = "http.request.method == GET"
+    pcap = run_command(f"tshark -r {path} -Y {filters}")
+
+    run_command("sleep 5")
+
+    _send_command("close_wireshark")
+
+    return pcap
 
 
 def open_wireshark() -> str:
