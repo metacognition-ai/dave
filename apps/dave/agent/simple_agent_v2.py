@@ -110,9 +110,4 @@ class EditFileTool(BaseTool):
     #def _run(self, full_file_path: str, replace: str, replace_with: str):
     def _run(self, path_replace_and_toreplace):
         full_file_path, replace, replace_with = path_replace_and_toreplace.split("@")
-        with open(full_file_path, 'r', encoding='utf-8') as file:
-            contents = file.read()
-        contents = contents.replace(replace, replace_with)
-        with open(full_file_path, 'w', encoding='utf-8') as file:
-            file.write(contents)
-
+        env.edit_file(full_file_path, replace, replace_with)

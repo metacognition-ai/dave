@@ -1,3 +1,4 @@
+import os
 import socket
 import subprocess
 
@@ -28,6 +29,12 @@ def run_command(command: str) -> str:
         stderr=subprocess.PIPE,
     )
 
+def edit_file(full_file_path: str, replace: str, replace_with: str):
+        with open(os.path.join(REPO_NAME, full_file_path), 'r', encoding='utf-8') as file:
+            contents = file.read()
+        contents = contents.replace(replace, replace_with)
+        with open(os.path.join(REPO_NAME, full_file_path), 'w', encoding='utf-8') as file:
+            file.write(contents)
 
 def filter_cap(path: str, filters: str) -> str:
     """
