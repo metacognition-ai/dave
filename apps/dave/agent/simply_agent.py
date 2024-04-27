@@ -9,8 +9,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 model = "gpt-4"
-MAX_ITERATIONS = 3
-
+MAX_ITERATIONS = 1
 
 class SimpleAgent:
 
@@ -21,7 +20,7 @@ class SimpleAgent:
         self.task_name = task_name
 
     @staticmethod
-    def get_api_key() -> str | None:
+    def get_api_key() -> str:
         load_dotenv("../.env")
         return os.getenv("OPENAI_API_KEY")
 
@@ -95,3 +94,11 @@ class SimpleAgent:
         response_file.close()
         command_file.close()
         result_file.close()
+
+agent = SimpleAgent(
+    prompt="I am a cybersecurity expert. I need to secure my network.",
+    task_name="Secure_Network",
+    mock_calls=False,
+)
+
+agent.run()
