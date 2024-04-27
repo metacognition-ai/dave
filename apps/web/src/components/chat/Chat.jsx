@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import { VscSparkleFilled } from 'react-icons/vsc';
+import { VscSparkleFilled, VscCircleFilled } from 'react-icons/vsc';
 import { FaRobot, FaUser } from 'react-icons/fa';
+import { Pill } from '@thumbtack/thumbprint-react';
+
 import { api_endpoint } from '../../api_endpoint';
 
-const ChatInterface = ({ jobID, setJobID }) => {
+const ChatInterface = ({ jobID, setJobID, status }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [userMessageCount, setUserMessageCount] = useState(0);
@@ -95,6 +97,27 @@ const ChatInterface = ({ jobID, setJobID }) => {
       <div className='border-b border-neutral-600 flex gap-2 items-center px-4 py-2 text-md'>
         <VscSparkleFilled />
         Chat
+        {status === 'RUNNING' && (
+          <Pill
+            color='yellow'
+            icon={<VscCircleFilled />}>
+            Working
+          </Pill>
+        )}
+        {status === 'COMPLETE' && (
+          <Pill
+            color='green'
+            icon={<VscCircleFilled />}>
+            Completed
+          </Pill>
+        )}
+        {status !== 'RUNNING' && status !== 'COMPLETE' && (
+          <Pill
+            color='blue'
+            icon={<VscCircleFilled />}>
+            Ready
+          </Pill>
+        )}
       </div>
       <ScrollToBottom className='flex-grow overflow-y-auto p-4'>
         {messages.map((message) => (

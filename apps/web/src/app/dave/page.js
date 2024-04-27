@@ -10,7 +10,10 @@ const Dave = () => {
   // const [isInitialized, setIsInitialized] = React.useState(true);
   const [jobID, setJobID] = useState('');
 
+  // TODO status
   useEffect(() => {}, []);
+
+  // TODO: gaurdrails
 
   return (
     <div className='bg-gray-900 flex flex-col min-h-screen text-white'>

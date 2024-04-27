@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
+    "@thumbtack/thumbprint-react": "^14.18.2",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/xterm": "^5.5.0",
     "next": "14.2.3",
@@ -22,6 +23,7 @@
     "react-spinners": "^0.13.8",
     "react-tabs": "^6.0.2",
     "react-type-animation": "^3.2.0",
+    "sass": "^1.75.0",
     "xterm-addon-fit": "^0.8.0",
     "xterm-addon-web-links": "^0.9.0",
     "xterm-for-react": "^1.0.4"
