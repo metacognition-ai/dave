@@ -13,8 +13,7 @@ from langchain.tools import BaseTool
 from typing import Union
 from math import pi
 
-
-import env
+import agent.env as env
 
 
 class SimpleAgentV2:
