@@ -22,6 +22,10 @@ class SimpleAgentV2:
             return_messages=True
         )
         
+        self.memory.chat_memory.add_ai_message(
+            "You are an expert software engineer. If you solve the problem, you will get a massive bonus. "
+        )
+        
         self.tools = [CircumferenceTool()]
 
         self.agent = initialize_agent(
