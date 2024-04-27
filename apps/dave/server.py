@@ -53,8 +53,7 @@ def process():
     repo_link = data.get('repo_link')
 
     # Command to run the agent script
-    command = f"sh run.sh --task_name {task_name} --task_description {prompt} --use_mock {mock_calls} --repo_link {repo_link} --timestamp {job_id}"
-    command = shlex.split(command)
+    command = f"sh run.sh --task_name {task_name} --task_description \"{prompt}\" --repo_link \"{repo_link}\" --timestamp \"{job_id}\""
     # Starting the subprocess
     try:
         process = subprocess.Popen(command, shell=True,
