@@ -15,22 +15,15 @@ from math import pi
 
 
 class SimpleAgentV2:
-    def __init__(self, timestamp):
+    def __init__(self):
         self.api_key = self.get_api_key()
         self.llm = ChatOpenAI(
             openai_api_key=self.api_key, temperature=0, model="gpt-4-turbo"
         )
-        self.llm.invoke(
-            [
-                {"role": "system", "content": "You are a software engineering expert."},
-            ]
-        )
-
-        self.memory.add_message("You are a software engineering expert.")
         self.memory = ConversationBufferMemory(
             memory_key="chat_history", return_messages=True
         )
-        self.timestamp = timestamp
+
         self.tools = [CircumferenceTool()]
 
         self.agent = initialize_agent(
@@ -47,27 +40,30 @@ class SimpleAgentV2:
     def get_api_key():
         load_dotenv()
         return os.getenv("OPENAI_API_KEY")
-    
+
     def get_status_update(self, question):
         # Get message history
         chat_history = str(agent.memory.chat_memory)
-        
+
         prompt = """
         {question}
         
         Give an update on the status of this task, based on the following conversation:
         {chat_history}
         """
-        
+
         prompt = prompt.format(question=question, chat_history=chat_history)
-        
+
         response = self.llm.invoke(
             [
-                {"role": "system", "content": "You are an excellent communicator and software engineering expert. You provide clear and concise updates on the status of tasks."},
-                {"role": "user", "content": prompt}
+                {
+                    "role": "system",
+                    "content": "You are an excellent communicator and software engineering expert. You provide clear and concise updates on the status of tasks.",
+                },
+                {"role": "user", "content": prompt},
             ]
         )
-        
+
         return response.content
 
     def run(self, prompt):
