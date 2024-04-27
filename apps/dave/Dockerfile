@@ -12,6 +12,7 @@ RUN apt update && \
   libffi-dev \
   python3-dev \
   python3-venv \
+  # wireshark \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
