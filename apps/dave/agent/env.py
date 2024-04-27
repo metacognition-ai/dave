@@ -8,9 +8,9 @@ def _send_command(command):
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
+        s.setblocking(False)
         s.sendall(command.encode())
         data = s.recv(1024)
-        # print("Received", repr(data))
 
 
 def run_command(command: str) -> str:
@@ -40,5 +40,19 @@ def open_wireshark() -> str:
     return run_command("tshark -r /tmp/capture.pcap")
 
 
-def open_web_browser():
-    pass
+def open_web_browser(url: str) -> str:
+    """
+    Open a web browser on host machine
+    Run curl command on container
+    Return the response
+    """
+    _send_command(f"open_chrome {url}")
+
+    html = run_command(f"curl -sL {url}")
+
+    # wait for 2 seconds
+    run_command("sleep 2")
+
+    _send_command("close_chrome")
+
+    return html

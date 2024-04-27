@@ -1,15 +1,15 @@
 import socket
+import argparse
+from env import _send_command
 
 
-def send_command(command):
-    HOST = "localhost"
-    PORT = 9090
+def main():
+    parser = argparse.ArgumentParser(description="Test the daemon")
+    parser.add_argument("--command", type=str, required=True, help="Command to send")
+    args = parser.parse_args()
 
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((HOST, PORT))
-        s.sendall(command.encode())
-        data = s.recv(1024)
-        print("Received", repr(data))
+    _send_command(args.command)
 
 
-send_command("open_wireshark")
+if __name__ == "__main__":
+    main()
