@@ -5,9 +5,6 @@ import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 
-import ReduxProvider from '../app/StoreProvider';
-import store from '../store';
-
 const inter = Inter({ subsets: ['latin'] });
 
 const PerlinSketchNoSSR = dynamic(() => import('../components/perlin'), {
@@ -21,7 +18,7 @@ export default function Home() {
   const handleCloseModal = () => setIsModalOpen(false);
 
   return (
-    <ReduxProvider store={store}>
+    <>
       <Head>
         <style>{`
           @keyframes pulse-grow {
@@ -58,6 +55,6 @@ export default function Home() {
         <main
           className={`flex min-h-screen flex-col items-center justify-center ${inter.className}`}></main>
       </div>
-    </ReduxProvider>
+    </>
   );
 }

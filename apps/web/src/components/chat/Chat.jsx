@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import { VscTerminal } from 'react-icons/vsc';
+import { VscSparkleFilled } from 'react-icons/vsc';
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
@@ -44,7 +44,7 @@ const ChatInterface = () => {
   return (
     <div className='bg-gray-900 flex flex-col h-full'>
       <div className='border-b border-neutral-600 flex gap-2 items-center px-4 py-2 text-sm'>
-        <VscTerminal />
+        <VscSparkleFilled />
         Chat
       </div>
       <ScrollToBottom className='flex-grow overflow-y-auto p-4'>
