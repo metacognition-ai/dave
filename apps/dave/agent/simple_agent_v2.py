@@ -7,11 +7,17 @@ from langchain.chains import ConversationChain
 from langchain.memory import ChatMessageHistory
 from langchain.memory import ConversationBufferMemory
 from langchain.memory import ConversationBufferWindowMemory
+from langchain.agents import initialize_agent
 
 class SimpleAgentV2:
     def __init__(self):
         self.api_key = self.get_api_key()
-        self.llm = ChatOpenAI(openai_api_key=self.api_key, temperature=0, model="gpt-3.5-turbo")
+        self.llm = ChatOpenAI(openai_api_key=self.api_key, temperature=0, model="gpt-4-turbo")
+        self.llm.invoke(
+            [
+                {"role": "system", "content": "You are a software engineering expert."},
+            ]
+        )
         self.memory = ConversationBufferMemory(
             memory_key='chat_history',
             return_messages=True
@@ -28,11 +34,17 @@ class SimpleAgentV2:
             early_stopping_method='generate',
             memory=self.memory
         )
-
+        
     @staticmethod
     def get_api_key():
         load_dotenv()
         return os.getenv("OPENAI_API_KEY")
+    
+    def get_status_update():
+        # Get message history
+        messages = self.memory.get_messages()
+        
+        prompt = ""
     
     def run(self, prompt):
         return self.agent(prompt)
