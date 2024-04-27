@@ -164,3 +164,4 @@ apps/web/.next/*
 
 *.txt
 !requirements.txt
+.env
