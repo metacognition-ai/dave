@@ -14,18 +14,22 @@ const ChatInterface = () => {
 
   const sendPrompt = () => {
     console.log(promptsToSend);
-
-    fetch('/process', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        task_name: 'Task',
-        ...promptsToSend,
-      }),
-    });
+    try {
+      fetch('http://127.0.0.1:5000/process', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          task_name: 'Task',
+          ...promptsToSend,
+        }),
+      });
+    } catch (e) {
+      console.log(e)
+    }
+      
   };
 
   useEffect(() => {

@@ -2,12 +2,17 @@ import time
 import subprocess
 import shlex
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 agents = {}
 
 
 @app.route('/<job_id>/status', methods=['GET'])
+@cross_origin()
 def get_status(job_id):
     if str(job_id) in agents:
         agent_info = agents[job_id]
@@ -22,6 +27,7 @@ def get_status(job_id):
 
 
 @app.route('/<job_id>/logs', methods=['GET'])
+@cross_origin()
 def get_logs(job_id):
     try:
         with open(f"./agent/logs/gpt-4-turbo/{job_id}/response.txt", 'r') as file:
@@ -41,7 +47,9 @@ def get_logs(job_id):
 
 
 @app.route('/process', methods=['POST'])
+@cross_origin()
 def process():
+    print("hello")
     data = request.json
     job_id =  int(time.time())  # job_id is just timestamp
     prompt = data.get('prompt')
