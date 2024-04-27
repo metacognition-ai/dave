@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+// TODO: API integration
+
 const Planner = () => {
   //   useEffect(() => {
   //     const terminal = document.getElementById('mock-terminal');

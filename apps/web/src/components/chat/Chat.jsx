@@ -1,16 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { VscSparkleFilled } from 'react-icons/vsc';
+import { FaRobot, FaUser } from 'react-icons/fa';
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [userMessageCount, setUserMessageCount] = useState(0);
+  const [promptsToSend, setPromptsToSend] = useState({
+    prompt: '',
+    repo_link: '',
+  });
+
+  const sendPrompt = () => {
+    console.log(promptsToSend);
+
+    fetch('/process', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        task_name: 'Task',
+        ...promptsToSend,
+      }),
+    });
+  };
 
   useEffect(() => {
-    // Send a default message from the bot when the component mounts
     const defaultMessage = {
       id: Date.now(),
-      text: 'Dave is waking up...',
+      text: `Hello, I'm Dave, an AI software engineer. How can I help you today?`,
       sender: 'dave',
     };
     setMessages([defaultMessage]);
@@ -20,7 +41,7 @@ const ChatInterface = () => {
     setInputMessage(e.target.value);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputMessage.trim() !== '') {
       const newMessage = {
         id: Date.now(),
@@ -29,17 +50,36 @@ const ChatInterface = () => {
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setInputMessage('');
-      // Simulate a response after 1 second
+      setUserMessageCount((prevCount) => prevCount + 1);
+
+      if (userMessageCount === 0) {
+        await setPromptsToSend((prevPrompts) => ({
+          ...prevPrompts,
+          prompt: inputMessage,
+        }));
+      } else if (userMessageCount === 1) {
+        await setPromptsToSend((prevPrompts) => ({
+          ...prevPrompts,
+          repo_link: inputMessage,
+        }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (userMessageCount === 2) {
       setTimeout(() => {
         const responseMessage = {
           id: Date.now(),
-          text: `Response to: ${newMessage.text}`,
+          text: `Sounds good. I'm working on it.`,
           sender: 'dave',
         };
         setMessages((prevMessages) => [...prevMessages, responseMessage]);
-      }, 1000);
+      }, 2500);
+
+      sendPrompt();
     }
-  };
+  }, [userMessageCount]);
 
   return (
     <div className='bg-gray-900 flex flex-col h-full'>
@@ -57,23 +97,44 @@ const ChatInterface = () => {
             <div
               className={`${
                 message.sender === 'user' ? 'bg-blue-600' : 'bg-gray-800'
-              } rounded-lg p-2 shadow`}>
-              <p className='text-sm text-white'>{message.text}</p>
+              } rounded-lg p-2 shadow flex items-center gap-2`}>
+              {message.sender === 'user' ? (
+                <React.Fragment>
+                  <p className='text-sm text-white'>{message.text}</p>
+                  <FaUser
+                    className='text-lg text-white'
+                    size={20}
+                  />
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <FaRobot
+                    className='text-lg text-white'
+                    size={20}
+                  />
+                  <p className='text-sm text-white'>{message.text}</p>
+                </React.Fragment>
+              )}
             </div>
           </div>
         ))}
       </ScrollToBottom>
       <div className='flex items-center px-4 py-2'>
         <input
+          disabled={userMessageCount > 1}
           type='text'
           value={inputMessage}
           onChange={handleInputChange}
           placeholder='Send a message'
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSendMessage();
+          }}
           className='bg-gray-800 border border-gray-700 flex-grow focus:outline-none focus:ring-2 focus:ring-blue-600 mr-2 px-4 py-2 rounded-lg text-white'
         />
         <button
+          disabled={userMessageCount > 1}
           onClick={handleSendMessage}
-          className='bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold hover:bg-blue-700 px-4 py-2 rounded-lg text-white'>
+          className={`bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 hover:bg-blue-700 focus:ring-blue-600 font-bold px-4 py-2 rounded-lg text-white`}>
           Send
         </button>
       </div>

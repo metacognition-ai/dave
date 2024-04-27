@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// MockTerminal Component
 const MockTerminal = () => {
   const [outputs, setOutputs] = useState([
     '$ ls',
@@ -12,6 +11,7 @@ const MockTerminal = () => {
   ]);
 
   // Function to add new output lines
+  // TODO: API integration
   const addOutput = (newOutput) => {
     setOutputs((prevOutputs) => [...prevOutputs, newOutput]);
   };
