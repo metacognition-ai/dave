@@ -2,7 +2,7 @@ import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { FaTerminal, FaCalendarAlt, FaCode, FaGlobe } from 'react-icons/fa';
 import Terminal from '../terminal/Terminal';
-// import Planner from './Planner';
+import Planner from '../planner/Planner';
 // import CodeEditor from './CodeEditor';
 // import Browser from './Browser';
 
@@ -11,13 +11,13 @@ const WorkspaceComponent = () => {
     <Tabs className='flex flex-col'>
       <TabList className='border-b border-neutral-600 flex'>
         <Tab
-          className='border-b-2 border-transparent cursor-pointer flex focus:outline-none hover:border-gray-300 hover:text-gray-600 items-center px-4 py-2 space-x-2 text-sm'
+          className='border-b-2 border-transparent cursor-pointer flex focus:outline-none hover:border-gray-300 hover:text-gray-600 items-center px-4 py-2 space-x-2 text-md'
           selectedClassName='bg-white text-black rounded-lg'>
           <FaTerminal className='text-lg' />
           <span>Terminal</span>
         </Tab>
         <Tab
-          className='border-b-2 border-transparent cursor-pointer flex focus:outline-none hover:border-gray-300 hover:text-gray-600 items-center px-4 py-2 space-x-2 text-sm'
+          className='border-b-2 border-transparent cursor-pointer flex focus:outline-none hover:border-gray-300 hover:text-gray-600 items-center px-4 py-2 space-x-2 text-md'
           selectedClassName='bg-white text-black rounded-lg'>
           <FaCalendarAlt className='text-lg' />
           <span>Planner</span>
@@ -43,7 +43,9 @@ const WorkspaceComponent = () => {
         </div>
       </TabPanel>
       <TabPanel>
-        <div className='p-4'></div>
+        <div className='p-4'>
+          <Planner />
+        </div>
       </TabPanel>
       {/* <TabPanel>
         <div className="p-4">

@@ -1,29 +1,40 @@
-'use client';
-import React from 'react';
-import { VscTerminal } from 'react-icons/vsc';
-import { XTerm } from 'xterm-for-react';
+import React, { useState, useEffect } from 'react';
 
-const Terminal = () => {
-  const xtermRef = React.useRef(null);
+// MockTerminal Component
+const MockTerminal = () => {
+  const [outputs, setOutputs] = useState([
+    '$ ls',
+    'ExampleDirectory',
+    'basic_Linux_commands.sh',
+    'git_practice',
+    'serverDocumentation.md',
+    'simpleServer.js',
+  ]);
 
-  React.useEffect(() => {
-    // You can call any method in XTerm.js by using 'xterm xtermRef.current.terminal.[What you want to call]
-    xtermRef.current.terminal.writeln(' >> Dave is live...');
-  }, []);
+  // Function to add new output lines
+  const addOutput = (newOutput) => {
+    setOutputs((prevOutputs) => [...prevOutputs, newOutput]);
+  };
+
+  // Effect to make sure the terminal is scrolled to the bottom on new output
+  useEffect(() => {
+    const terminal = document.getElementById('mock-terminal');
+    if (terminal) {
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  }, [outputs]);
 
   return (
-    <div className='flex flex-col h-full'>
-      {/* <div className='border-b border-neutral-600 flex gap-2 items-center px-4 py-2 text-sm'>
-        <VscTerminal /> Terminal (read-only)
-      </div> */}
-      <div className='p-2'>
-        <XTerm
-          ref={xtermRef}
-          options={{ lineHeight: 2 }}
-        />
-      </div>
+    <div
+      id='mock-terminal'
+      className='bg-black custom-height font-mono overflow-auto p-4 rounded-xl text-green-400 text-sm w-full'
+      style={{ height: '700px' }} // Set your fixed height here
+    >
+      {outputs.map((output, index) => (
+        <div key={index}>{output}</div>
+      ))}
     </div>
   );
 };
 
-export default Terminal;
+export default MockTerminal;

@@ -43,7 +43,7 @@ const ChatInterface = () => {
 
   return (
     <div className='bg-gray-900 flex flex-col h-full'>
-      <div className='border-b border-neutral-600 flex gap-2 items-center px-4 py-2 text-sm'>
+      <div className='border-b border-neutral-600 flex gap-2 items-center px-4 py-2 text-md'>
         <VscSparkleFilled />
         Chat
       </div>
@@ -68,12 +68,12 @@ const ChatInterface = () => {
           type='text'
           value={inputMessage}
           onChange={handleInputChange}
-          placeholder='Chat with Dave...'
+          placeholder='Send a message'
           className='bg-gray-800 border border-gray-700 flex-grow focus:outline-none focus:ring-2 focus:ring-blue-600 mr-2 px-4 py-2 rounded-lg text-white'
         />
         <button
           onClick={handleSendMessage}
-          className='bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold hover:bg-blue-700 px-4 py-2 rounded-lg text-white'>
+          className='bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold hover:bg-blue-700 px-4 py-2 rounded-lg text-white'>
           Send
         </button>
       </div>
