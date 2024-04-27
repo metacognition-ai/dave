@@ -19,6 +19,4 @@ RUN python3 -m venv /venv && source /venv/bin/activate && pip install -r require
 
 RUN echo "source /venv/bin/activate" >> /etc/bash/bashrc
 
-ENTRYPOINT ["/bin/bash"]
-
-CMD ["/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
