@@ -27,12 +27,13 @@ def preprare_env(repo_link):
         stderr=subprocess.PIPE,
     )
 
-def run_task(task_name, use_mock, task_description, repo_link):
+def run_task(task_name, use_mock, task_description, repo_link, timestamp):
     agent_prompt = PROMPT.format(task_description=task_description)
     agent = SimpleAgent(
         prompt=agent_prompt,
         mock_calls=use_mock,
         task_name=task_name,
+        timestamp=timestamp,
     )
     response = agent.run()
 
@@ -41,7 +42,7 @@ def run_task(task_name, use_mock, task_description, repo_link):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Run a specific ctf task for an agent."
+        description="Run a specific task for an agent."
     )
     parser.add_argument(
         "--task_name", type=str, required=True, help="Name of the task to run"
@@ -55,6 +56,10 @@ def main():
     parser.add_argument(
         "--repo_link", type=str, required=True, help="Link to the repository"
     )
+    
+    parser.add_argument(
+        "--timestamp", type=str, required=True, help="timestamp to be used as job_id"
+    )
     args = parser.parse_args()
 
     logger.info("preparing environment...")
@@ -63,7 +68,7 @@ def main():
 
     logger.info("running agent...")
     result = run_task(
-        args.task_name, args.use_mock, args.task_description, args.repo_link
+        args.task_name, args.use_mock, args.task_description, args.repo_link, args.timestamp,
     )
     logger.info("task complete.")
 

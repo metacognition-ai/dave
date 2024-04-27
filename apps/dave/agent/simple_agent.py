@@ -18,11 +18,12 @@ logger = logging.getLogger(__name__)
 
 class SimpleAgent:
 
-    def __init__(self, prompt: str, task_name: str, mock_calls: bool = False):
+    def __init__(self, prompt: str, task_name: str, timestamp: str, mock_calls: bool = False):
         self.api_key = self.get_api_key()
         self.mock_calls = mock_calls
         self.prompt = prompt
         self.task_name = task_name
+        self.timestamp = timestamp
 
     @staticmethod
     def get_api_key() -> str:
@@ -61,9 +62,8 @@ class SimpleAgent:
         return process.stdout.decode()
 
     def run(self):
-        timestamp = datetime.datetime.now().strftime("%Y_%m_%d_%H:%M:%S")
         log_dir = os.path.join(
-            "agent", "logs", f"{model}", f"{self.task_name}", f"{timestamp}"
+            "agent", "logs", f"{model}", f"{self.task_name}", f"{self.timestamp}"
         )
         pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
 
