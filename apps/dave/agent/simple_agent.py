@@ -4,12 +4,16 @@ import pathlib
 import re
 import subprocess
 from typing import Any
+import logging
 
 from dotenv import load_dotenv
 from openai import OpenAI
 
 model = "gpt-3.5-turbo"
 MAX_ITERATIONS = 1
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class SimpleAgent:
@@ -75,32 +79,23 @@ class SimpleAgent:
             response = self.talk_to_llm(input)
             if response:
                 response_file.write(iteration_log + response + "\n")
-            print(response)
+            logger.info(response)
 
             command = self.parse_response(response)
             result = None
             if command:
                 command_file.write(iteration_log + command + "\n")
                 result = self.execute_commands(command)
-            print(command)
+            logger.info(command)
 
             if result:
                 result_file.write(iteration_log + result + "\n")
-            print(result)
+            logger.info(result)
 
             input = f"{input}\nObservation: {result}"
-            print(curr_iter)
+            logger.info(curr_iter)
             curr_iter += 1
 
         response_file.close()
         command_file.close()
         result_file.close()
-
-
-agent = SimpleAgent(
-    prompt="I am a cybersecurity expert. I need to secure my network.",
-    task_name="Secure_Network",
-    mock_calls=False,
-)
-
-agent.run()
