@@ -1,4 +1,5 @@
 import React, { useState, useEffect, use } from 'react';
+import { api_endpoint } from '../../api_endpoint';
 
 const Terminal = ({ jobID }) => {
   const [outputs, setOutputs] = useState([
@@ -22,16 +23,21 @@ const Terminal = ({ jobID }) => {
   //   }, []);
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   const responseMessage = {
-    //     id: Date.now(),
-    //     text: `Sounds good. I'm working on it.`,
-    //     sender: 'dave',
-    //   };
-    //   setMessages((prevMessages) => [...prevMessages, responseMessage]);
-    // }, 2500);
-    // sendPrompt();
-  }, [outputs]);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(api_endpoint + jobID + '/status');
+        const jsonData = await response.json();
+        setOutputs(jsonData);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    };
+
+    fetchData();
+    const intervalId = setInterval(fetchData, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [jobID]);
 
   // Effect to make sure the terminal is scrolled to the bottom on new output
   useEffect(() => {
