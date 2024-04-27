@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { VscSparkleFilled } from 'react-icons/vsc';
 import { FaRobot, FaUser } from 'react-icons/fa';
+import { api_endpoint } from '../../api_endpoint';
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
@@ -13,23 +14,17 @@ const ChatInterface = () => {
   });
 
   const sendPrompt = () => {
-    console.log(promptsToSend);
-    try {
-      fetch('http://127.0.0.1:5000/process', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          task_name: 'Task',
-          ...promptsToSend,
-        }),
-      });
-    } catch (e) {
-      console.log(e)
-    }
-      
+    fetch(api_endpoint + '/process', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        task_name: 'Task',
+        ...promptsToSend,
+      }),
+    });
   };
 
   useEffect(() => {
