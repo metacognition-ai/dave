@@ -160,4 +160,5 @@ cython_debug/
 #.idea/
 
 apps/web/node_modules/*
+apps/web/.next/*
 
