@@ -10,6 +10,9 @@ from langchain.memory import ConversationBufferWindowMemory
 from langchain.agents import initialize_agent
 from langchain.tools import BaseTool
 
+from typing import Union
+from math import pi
+
 class SimpleAgentV2:
     def __init__(self):
         self.api_key = self.get_api_key()
