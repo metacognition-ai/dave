@@ -29,4 +29,4 @@ docker run -it \
 	--env-file=../../.env \
 	$image_name "$@" | tee "/tmp/$dave_container-latest.log"
 
-container rm -f $container_name
+docker container rm $container_name

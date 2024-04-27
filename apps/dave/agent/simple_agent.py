@@ -26,7 +26,8 @@ class SimpleAgent:
 
     @staticmethod
     def get_api_key() -> str:
-        load_dotenv("../.env")
+        load_dotenv("../../.env")
+        print("loading api key", os.getenv("OPENAI_API_KEY"))
         return os.getenv("OPENAI_API_KEY")
 
     def talk_to_llm(self, input):

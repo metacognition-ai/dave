@@ -10,7 +10,7 @@ logger.setLevel(logging.INFO)
 
 
 def run_task(task_name, use_mock):
-    agent_prompt = PROMPT.format()
+    agent_prompt = PROMPT.format(task_description="This is a test task")
     agent = SimpleAgent(prompt=agent_prompt, mock_calls=use_mock, task_name=task_name)
     response = agent.run()
 
