@@ -39,4 +39,7 @@ Observation:
 example of creating a file 
 
 Stick to UTF-8 encoding for all text and ignore any file types like images or videos that are not pertinent to the task.
+
+Here is context about the repository, including each file and its contents, for your reference:
+{repository_context}
 """

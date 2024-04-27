@@ -33,6 +33,9 @@ def main():
     parser.add_argument(
         "--use_mock", action="store_true", help="Use mock calls for testing"
     )
+    parser.add_argument(
+        "--repo_link", type=str, required=True, help="Link to the repository"
+    )
     args = parser.parse_args()
 
     logger.info("running agent...")
