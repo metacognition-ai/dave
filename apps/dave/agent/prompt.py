@@ -20,11 +20,20 @@ Instructions:
 Response Format:
 Reflection: Interpret the observation results. If there are errors, diagnose and suggest fixes.
 Research Plan and Status: Document your overall plan and current progress, including confirmed outcomes. Use confidence levels (e.g., Completed - 100 for full certainty).
-Fact Check: Validate each statement from the Research Plan and Status based on prior observations.
 Thought: Detail current tasks, proposed actions, and rationale.
 Action: Define the next step to take using terminal commands.
+Command: The command to execute in the terminal. This should be a single command or a sequence of commands that can be executed together. There should be no extra formating, unnecessary quotes or special tokens/characters.
 
 Stick to UTF-8 encoding for all text and ignore any file types like images or videos that are not pertinent to the task.
+
+Example:
+Reflection: The server.log file contains an error message related to the database connection.
+Research Plan and Status: Read the contents of server.log to identify the error message.
+Thought: The error message might provide insights into the database connection issue.
+Action: Read the contents of server.log.
+Command: cat server.log
+
+Again, the do not put your Command in a codeblock or any special formatting.
 
 Here is context about the repository, including each file and its contents, for your reference:
 {repository_context}

@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 model = "gpt-4-turbo"
-MAX_ITERATIONS = 1
+MAX_ITERATIONS = 3
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -58,9 +58,11 @@ class SimpleAgent:
 
     @staticmethod
     def execute_commands(command):
+        logger.info(f"Executing command: {command}")
         process = subprocess.run(
             command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
+        logger.info(f"Command output: {process.stdout.decode()}")
         return process.stdout.decode()
 
     def run(self):
