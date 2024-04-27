@@ -2,7 +2,7 @@ FROM ubuntu:24.04 as base
 
 # Install deps and common tools for the agent
 RUN apt update && \
-  apt intall -y 
+  apt intall -y \
   curl \
   git \
   python3 \
