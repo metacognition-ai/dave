@@ -1,4 +1,4 @@
-FROM ubuntu:24.04 as base
+FROM ubuntu:24.04
 
 # Install deps and common tools for the agent
 RUN apt update && \
@@ -18,7 +18,6 @@ WORKDIR /app
 
 COPY requirements.txt /app
 
-FROM base as builder
+RUN python3 -m venv /venv && source /venv/bin/activate && pip install -r requirements.txt --no-cache-dir 
 
-RUN python3 -m pip install -r requirements.txt --no-cache-dir 
-ENTRYPOINT ["python3", "main.py"]
+ENTRYPOINT ["/venv/bin/python3", "main.py"]

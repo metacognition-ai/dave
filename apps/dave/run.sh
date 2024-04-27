@@ -29,7 +29,7 @@ docker run -it \
 	--name $container_name \
 	-v $(pwd)/agent:/app/agent \
 	-v $(pwd)/main.py:/app/main.py \
-	--env-file=../../env \
+	--env-file=../../.env \
 	$image_name "$@" | tee "/tmp/$dave_container-latest.log"
 
 container rm -f $container_name
