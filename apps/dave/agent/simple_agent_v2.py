@@ -97,7 +97,7 @@ class RunShellCommandTool(BaseTool):
         {str(subp.stdout)}
 
         Standard error (if not empty):
-        {str(subp.stdout)}
+        {str(subp.stderr)}
         """
 
     def _arun(self, bash_shell_command: str):

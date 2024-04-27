@@ -18,7 +18,9 @@ def run_command(command: str) -> str:
     Run a command on the container
     """
     return subprocess.run(
-        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        ["/bin/bash", "-c", command],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
 
 
