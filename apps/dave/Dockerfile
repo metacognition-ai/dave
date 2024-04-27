@@ -20,5 +20,5 @@ COPY requirements.txt /app
 
 FROM base as builder
 
-RUN python3 install -r requirements.txt --no-cache-dir 
+RUN python3 -m pip install -r requirements.txt --no-cache-dir 
 ENTRYPOINT ["python3", "main.py"]
