@@ -18,6 +18,8 @@ WORKDIR /app
 
 COPY requirements.txt /app
 
+SHELL ["/bin/bash", "-c"]
+
 RUN python3 -m venv /venv && source /venv/bin/activate && pip install -r requirements.txt --no-cache-dir 
 
 ENTRYPOINT ["/venv/bin/python3", "main.py"]

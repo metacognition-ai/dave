@@ -5,4 +5,4 @@ set -o pipefail
 
 image_name="dave_agent"
 
-docker build -t $image_name . --no-cache
+docker build -t $image_name .
