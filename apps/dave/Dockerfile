@@ -1,7 +1,13 @@
 FROM docker:dind 
 
 # Install deps and common tools for the agent
-RUN apk add curl git python3 py3-pip bash
+RUN apk add curl \
+  git \
+  python3 \
+  py3-pip \
+  tshark \
+  bash 
+
 WORKDIR /app
 
 COPY requirements.txt /app

@@ -22,6 +22,10 @@ def run_command(command: str) -> str:
     )
 
 
+def filter_cap() -> str:
+    pass
+
+
 def open_wireshark() -> str:
     """
     Open wireshark on host machine and return pcap content
@@ -31,7 +35,7 @@ def open_wireshark() -> str:
     _send_command("open_wireshark")
 
     # run wireshark and record for 10 seconds
-    run_command("tshark -i en0 -a duration:10 -w /tmp/capture.pcap")
+    run_command("tshark -i lo -a duration:10 -w /tmp/capture.pcap")
 
     ## close wireshark on host
     _send_command("close_wireshark")
