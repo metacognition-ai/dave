@@ -2,6 +2,7 @@ import argparse
 import logging
 import subprocess
 
+from agent.env import set_repo_name
 from agent.prompt import PROMPT
 from agent.simple_agent import SimpleAgent
 from agent.simple_agent_v2 import SimpleAgentV2
@@ -57,6 +58,8 @@ def run_v2_task(
         raise ValueError("max_iterations should be greater than 0")
 
     repo_name = repo_link.split("/")[-1].replace(".git", "")
+    set_repo_name(repo_name)
+
 
     repository_context = process_repository(f"./{repo_name}")
 
