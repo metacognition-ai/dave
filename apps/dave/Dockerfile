@@ -1,20 +1,7 @@
-FROM ubuntu:24.04
+FROM docker:dind 
 
 # Install deps and common tools for the agent
-RUN apt update && \
-  apt install -y \
-  curl \
-  git \
-  python3 \
-  python3-pip \ 
-  build-essential \
-  libssl-dev \
-  libffi-dev \
-  python3-dev \
-  python3-venv \
-  # wireshark \
-  && rm -rf /var/lib/apt/lists/*
-
+RUN apk add curl git python3 py3-pip bash
 WORKDIR /app
 
 COPY requirements.txt /app
@@ -22,5 +9,7 @@ COPY requirements.txt /app
 SHELL ["/bin/bash", "-c"]
 
 RUN python3 -m venv /venv && source /venv/bin/activate && pip install -r requirements.txt --no-cache-dir 
+
+RUN echo "source /venv/bin/activate" >> /etc/bash/bashrc
 
 ENTRYPOINT ["/venv/bin/python3", "main.py"]

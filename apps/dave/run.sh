@@ -23,6 +23,7 @@ if [ "$(docker ps -aq -f name=$container_name)" ]; then
 fi
 
 docker run -it \
+	--privileged \
 	--name $container_name \
 	-v $(pwd)/agent:/app/agent \
 	-v $(pwd)/main.py:/app/main.py \
