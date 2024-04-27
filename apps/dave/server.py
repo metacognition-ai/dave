@@ -9,9 +9,6 @@ agents = {}
 
 @app.route('/<job_id>/status', methods=['GET'])
 def get_status(job_id):
-    print(job_id)
-    print(agents)
-    
     if str(job_id) in agents:
         agent_info = agents[job_id]
         print(agent_info)
