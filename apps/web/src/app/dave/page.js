@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import TerminalPanel from '../../components/terminal/Terminal';
+import { useState } from 'react';
 import ChatInterface from '../../components/chat/Chat';
 import LoadingSpinner from '../../components/chat/DaveLoading';
 
@@ -8,6 +8,7 @@ import WorkspaceComponent from '../../components/workspace-components/WorkspaceC
 
 const Dave = () => {
   // const [isInitialized, setIsInitialized] = React.useState(true);
+  const [jobID, setJobID] = useState('');
 
   return (
     <div className='bg-gray-900 flex flex-col min-h-screen text-white'>
@@ -18,11 +19,14 @@ const Dave = () => {
       </header> */}
       <main className='container flex flex-grow mx-auto px-4 py-8'>
         <div className='pr-4 w-1/2'>
-          <ChatInterface />
+          <ChatInterface
+            jobID={jobID}
+            setJobID={setJobID}
+          />
           {/* {isInitialized ? <ChatInterface /> : <LoadingSpinner />} */}
         </div>
         <div className='pl-4 w-1/2'>
-          <WorkspaceComponent />
+          <WorkspaceComponent jobID={jobID} />
         </div>
       </main>
       {/* <footer className='bg-gray-800 py-4'>

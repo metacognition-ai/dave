@@ -1,6 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 
-const MockTerminal = () => {
+const Terminal = ({ jobID }) => {
   const [outputs, setOutputs] = useState([
     '$ ls',
     'ExampleDirectory',
@@ -15,6 +15,11 @@ const MockTerminal = () => {
   const addOutput = (newOutput) => {
     setOutputs((prevOutputs) => [...prevOutputs, newOutput]);
   };
+
+  //   useEffect(() => {
+  //     var jobID = localStorage.getItem('jobID');
+  //     setJobID(jobID);
+  //   }, []);
 
   useEffect(() => {
     // setTimeout(() => {
@@ -49,4 +54,4 @@ const MockTerminal = () => {
   );
 };
 
-export default MockTerminal;
+export default Terminal;

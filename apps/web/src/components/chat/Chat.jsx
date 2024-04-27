@@ -4,7 +4,7 @@ import { VscSparkleFilled } from 'react-icons/vsc';
 import { FaRobot, FaUser } from 'react-icons/fa';
 import { api_endpoint } from '../../api_endpoint';
 
-const ChatInterface = () => {
+const ChatInterface = ({ jobID, setJobID }) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [userMessageCount, setUserMessageCount] = useState(0);
@@ -12,7 +12,6 @@ const ChatInterface = () => {
     prompt: '',
     repo_link: '',
   });
-  const [jobID, setJobID] = useState('');
 
   const sendPrompt = () => {
     fetch(api_endpoint + '/process', {
@@ -26,13 +25,15 @@ const ChatInterface = () => {
         ...promptsToSend,
       }),
     }).then((res) =>
-      res.ok ? res.json().then((data) => setJobID(data)) : console.error(res)
+      res.ok
+        ? res.json().then((data) => setJobID(data.job_id))
+        : console.error(res)
     );
   };
 
   useEffect(() => {
     if (jobID !== '') {
-      console.log(jobID);
+      localStorage.setItem('jobID', jobID);
     }
   }, [jobID]);
 
@@ -83,7 +84,7 @@ const ChatInterface = () => {
           sender: 'dave',
         };
         setMessages((prevMessages) => [...prevMessages, responseMessage]);
-      }, 2500);
+      }, 1500);
 
       sendPrompt();
     }

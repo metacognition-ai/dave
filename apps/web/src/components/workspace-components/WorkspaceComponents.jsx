@@ -6,7 +6,7 @@ import Planner from '../planner/Planner';
 // import CodeEditor from './CodeEditor';
 // import Browser from './Browser';
 
-const WorkspaceComponent = () => {
+const WorkspaceComponent = ({ jobID }) => {
   return (
     <Tabs className='flex flex-col'>
       <TabList className='border-b border-neutral-600 flex'>
@@ -39,12 +39,12 @@ const WorkspaceComponent = () => {
       </TabList>
       <TabPanel>
         <div className='p-4'>
-          <Terminal />
+          <Terminal jobID={jobID} />
         </div>
       </TabPanel>
       <TabPanel>
         <div className='p-4'>
-          <Planner />
+          <Planner jobID={jobID} />
         </div>
       </TabPanel>
       {/* <TabPanel>
