@@ -14,6 +14,7 @@ def preprare_env():
         "docker compose up -d",
         shell=True,
         stdout=subprocess.PIPE,
+        # ignore if fails
         stderr=subprocess.PIPE,
     )
 
