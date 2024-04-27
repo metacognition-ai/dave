@@ -66,9 +66,9 @@ class SimpleAgent:
         )
         pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
 
-        response_file = open(os.path.join(log_dir, "Response.txt"), "w")
-        command_file = open(os.path.join(log_dir, "Command.txt"), "w")
-        result_file = open(os.path.join(log_dir, "Result.txt"), "w")
+        response_file = open(os.path.join(log_dir, "response.txt"), "w")
+        command_file = open(os.path.join(log_dir, "command.txt"), "w")
+        result_file = open(os.path.join(log_dir, "result.txt"), "w")
 
         input = self.prompt
 
