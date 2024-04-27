@@ -1,5 +1,4 @@
 import argparse
-import os
 import logging
 
 from agent.prompt import PROMPT
