@@ -29,7 +29,7 @@ class SimpleAgentV2:
             "You are an expert software engineer. If you solve the problem, you will get a massive bonus. "
         )
 
-        self.tools = [RunShellCommandTool()]
+        self.tools = [RunShellCommandTool(), EditFileTool()]
 
         self.agent = initialize_agent(
             agent="chat-conversational-react-description",
@@ -88,7 +88,7 @@ class CircumferenceTool(BaseTool):
 
 class RunShellCommandTool(BaseTool):
     name = "Run bash shell command"
-    description = "use this tool when you want to run a bash shell command in the development environment of the repository. Include any 'cd's because you are in the root of the directory"
+    description = "use this tool when you want to run a bash shell command in the development environment of the repository. Include any 'cd's because you are in the root of the repository directory"
 
     def _run(self, bash_shell_command: str) -> str:
         subp = env.run_command(bash_shell_command)
@@ -102,3 +102,15 @@ class RunShellCommandTool(BaseTool):
 
     def _arun(self, bash_shell_command: str):
         raise NotImplementedError
+
+class EditFileTool(BaseTool):
+    name = "Edit file tool"
+    description = "use this tool when you want to edit a file to fix a bug in your code. This tool takes a string that you want to replace and a string that you want it to be replaced with. use the fill file path as given to you above. this should be the final command you run. MAKE SURE YOU DO AT LEAST ONE EDIT FILE TOOL BEFORE YOU RETURN A FINAL ANSWER"
+
+    def _run(self, full_file_path: str, replace: str, replace_with: str):
+        with open(full_file_path, 'r', encoding='utf-8') as file:
+            contents = file.read()
+        contents = contents.replace(replace, replace_with)
+        with open(full_file_path, 'w', encoding='utf-8') as file:
+            file.write(contents)
+
