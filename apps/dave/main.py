@@ -15,6 +15,8 @@ logger.setLevel(logging.INFO)
 
 def preprare_env(repo_link):
     repo_name = repo_link.split("/")[-1].replace(".git", "")
+    set_repo_name(repo_name)
+
     # Clone the repo
     subprocess.run(
         f"git clone {repo_link} {repo_name}",
@@ -58,8 +60,6 @@ def run_v2_task(
         raise ValueError("max_iterations should be greater than 0")
 
     repo_name = repo_link.split("/")[-1].replace(".git", "")
-    set_repo_name(repo_name)
-
 
     repository_context = process_repository(f"./{repo_name}")
 
