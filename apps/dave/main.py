@@ -2,6 +2,7 @@ import argparse
 import logging
 import subprocess
 
+from agent.env import set_repo_name
 from agent.prompt import PROMPT
 from agent.simple_agent import SimpleAgent
 from agent.simple_agent_v2 import SimpleAgentV2
@@ -14,6 +15,8 @@ logger.setLevel(logging.INFO)
 
 def preprare_env(repo_link):
     repo_name = repo_link.split("/")[-1].replace(".git", "")
+    set_repo_name(repo_name)
+
     # Clone the repo
     subprocess.run(
         f"git clone {repo_link} {repo_name}",

@@ -1,5 +1,11 @@
+import os
 import socket
 import subprocess
+
+
+def set_repo_name(repo_name: str):
+    global REPO_NAME
+    REPO_NAME = repo_name
 
 
 def _send_command(command):
@@ -18,11 +24,17 @@ def run_command(command: str) -> str:
     Run a command on the container
     """
     return subprocess.run(
-        ["/bin/bash", "-c", command],
+        ["/bin/bash", "-c", f"cd {REPO_NAME} && {command}"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
 
+def edit_file(full_file_path: str, replace: str, replace_with: str):
+        with open(os.path.join(REPO_NAME, full_file_path), 'r', encoding='utf-8') as file:
+            contents = file.read()
+        contents = contents.replace(replace, replace_with)
+        with open(os.path.join(REPO_NAME, full_file_path), 'w', encoding='utf-8') as file:
+            file.write(contents)
 
 def filter_cap(path: str, filters: str) -> str:
     """

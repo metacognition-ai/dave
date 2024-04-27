@@ -17,7 +17,7 @@ const Terminal = ({ jobID }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(api_endpoint + '/' + jobID + '/status');
+        const response = await fetch(api_endpoint + '/' + jobID + '/logs');
         var jsonData = await response.json();
 
         jsonData = jsonData.replaceAll('command: ', '$ ');
