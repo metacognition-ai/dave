@@ -4,14 +4,33 @@ import { useState } from 'react';
 import ChatInterface from '../../components/chat/Chat';
 import LoadingSpinner from '../../components/chat/DaveLoading';
 
+import { api_endpoint } from '../../api_endpoint';
+
 import WorkspaceComponent from '../../components/workspace-components/WorkspaceComponents';
 
 const Dave = () => {
   // const [isInitialized, setIsInitialized] = React.useState(true);
   const [jobID, setJobID] = useState('');
+  const [status, setStatus] = useState('');
 
-  // TODO status
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fetchAgentStatus = async () => {
+      try {
+        const response = await fetch(api_endpoint + '/' + jobID + '/status');
+        var jsonData = await response.json();
+
+        const status = jsonData.status;
+        setStatus(status);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      }
+    };
+
+    fetchAgentStatus();
+    const intervalId = setInterval(fetchAgentStatus, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [jobID]);
 
   // TODO: gaurdrails
 
@@ -27,6 +46,7 @@ const Dave = () => {
           <ChatInterface
             jobID={jobID}
             setJobID={setJobID}
+            status={status}
           />
           {/* {isInitialized ? <ChatInterface /> : <LoadingSpinner />} */}
         </div>
