@@ -1,4 +1,5 @@
 import os
+import pathlib
 from dotenv import load_dotenv
 
 from langchain.llms import OpenAI
@@ -15,6 +16,7 @@ from math import pi
 
 import agent.env as env
 
+MAX_ITERATIONS = 3
 
 class SimpleAgentV2:
     def __init__(self):
@@ -72,7 +74,20 @@ class SimpleAgentV2:
         return response.content
 
     def run(self, prompt):
-        return self.agent(prompt)
+        
+        output = self.agent(prompt)
+        
+        log_dir = os.path.join(
+            "agent", "logs", f"{self.timestamp}"
+        )
+        
+        pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
+        
+        with open(os.path.join(log_dir, "out.txt"), "a") as out:
+            if output['output']:
+                out.write("output: " + output['output'] + "\n")
+        
+        return output
 
 
 class CircumferenceTool(BaseTool):

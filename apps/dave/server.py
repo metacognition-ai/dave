@@ -30,16 +30,11 @@ def get_status(job_id):
 @cross_origin()
 def get_logs(job_id):
     try:
-        with open(f"./agent/logs/gpt-4-turbo/{job_id}/response.txt", 'r') as file:
-            response_logs = file.read()
-        with open(f"./agent/logs/gpt-4-turbo/{job_id}/command.txt", 'r') as file:
-            command_logs = file.read()
-        with open(f"./agent/logs/gpt-4-turbo/{job_id}/result.txt", 'r') as file:
-            result_logs = file.read()
+        with open(f"./agent/logs/gpt-4-turbo/{job_id}/out.txt", 'r') as file:
+            out = file.read()
+        
         logs = {
-            'response': response_logs,
-            'command': command_logs,
-            'result': result_logs
+            'response': out,
         }
         return jsonify(logs)
     except FileNotFoundError:
@@ -53,11 +48,10 @@ def process():
     job_id =  int(time.time())  # job_id is just timestamp
     prompt = data.get('prompt')
     task_name = data.get('task_name')
-    mock_calls = data.get('mock_calls', False)
     repo_link = data.get('repo_link')
 
     # Command to run the agent script
-    command = f"sh run.sh --task_name {task_name} --task_description \"{prompt}\" --repo_link \"{repo_link}\" --timestamp \"{job_id}\""
+    command = f"sh run.sh --task_name {task_name} --task_description \"{prompt}\" --repo_link \"{repo_link}\" --timestamp \"{job_id}\" --max_iteration 3"
     # Starting the subprocess
     try:
         process = subprocess.Popen(command, shell=True,

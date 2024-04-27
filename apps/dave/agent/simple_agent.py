@@ -67,40 +67,21 @@ class SimpleAgent:
 
     def run(self):
         log_dir = os.path.join(
-            "agent", "logs", f"{model}", f"{self.timestamp}"
+            "agent", "logs", f"{self.timestamp}"
         )
         pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
 
-        response_file = open(os.path.join(log_dir, "response.txt"), "a")
-        command_file = open(os.path.join(log_dir, "command.txt"), "a")
-        result_file = open(os.path.join(log_dir, "result.txt"), "a")
-
+        out = open(os.path.join(log_dir, "out.txt"), "a")
+        
         input = self.prompt
 
         curr_iter = 0
         while curr_iter < MAX_ITERATIONS:
-            iteration_log = f"======== Current Iteration: {curr_iter} ========\n"
-
             response = self.talk_to_llm(input)
             if response:
-                response_file.write(iteration_log + response + "\n")
+                out.write("output:" + response + "\n")
             logger.info(response)
 
-            command = self.parse_response(response)
-            result = None
-            if command:
-                command_file.write(iteration_log + command + "\n")
-                result = self.execute_commands(command)
-            logger.info(command)
-
-            if result:
-                result_file.write(iteration_log + result + "\n")
-            logger.info(result)
-
-            input = f"{input}\nObservation: {result}"
-            logger.info(curr_iter)
             curr_iter += 1
 
-        response_file.close()
-        command_file.close()
-        result_file.close()
+        out.close()
