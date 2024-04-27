@@ -4,8 +4,9 @@ import subprocess
 
 from agent.prompt import PROMPT
 from agent.simple_agent import SimpleAgent
+from agent.simple_agent_v2 import SimpleAgentV2
 
-from agent.utils import process_repository
+from agent.utils import process_repository, output_to_prompt
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -49,10 +50,33 @@ def run_task(task_name, use_mock, task_description, repo_link, timestamp):
     return response
 
 
-def main():
-    parser = argparse.ArgumentParser(
-        description="Run a specific task for an agent."
+def run_v2_task(
+    task_name, use_mock, task_description, repo_link, timestamp, max_iterations
+):
+    if max_iterations < 1:
+        raise ValueError("max_iterations should be greater than 0")
+
+    repo_name = repo_link.split("/")[-1].replace(".git", "")
+
+    repository_context = process_repository(f"./{repo_name}")
+
+    agent_prompt = PROMPT.format(
+        task_description=task_description, repository_context=repository_context
     )
+    agent = SimpleAgentV2(
+        # timestamp=timestamp,
+    )
+
+    output = agent.run(agent_prompt)
+    for _ in range(max_iterations):
+        prompt = output_to_prompt(output)
+        output = agent.run(prompt)
+
+    return
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Run a specific task for an agent.")
     parser.add_argument(
         "--task_name", type=str, required=True, help="Name of the task to run"
     )
@@ -69,20 +93,39 @@ def main():
     parser.add_argument(
         "--repo_link", type=str, required=True, help="Link to the repository"
     )
-    
+
     parser.add_argument(
         "--timestamp", type=str, required=True, help="timestamp to be used as job_id"
+    )
+    parser.add_argument(
+        "--max_iterations",
+        type=int,
+        required=False,
+        help="Number of iterations to run the agent",
+        default=3,
     )
     args = parser.parse_args()
 
     logger.info("preparing environment...")
-    preprare_env(args.repo_link)  # pass the repo link
+    preprare_env(args.repo_link)
     logger.info("environment ready.")
 
     logger.info("running agent...")
-    result = run_task(
-        args.task_name, args.use_mock, args.task_description, args.repo_link, args.timestamp,
+    run_v2_task(
+        args.task_name,
+        args.use_mock,
+        args.task_description,
+        args.repo_link,
+        args.timestamp,
+        args.max_iterations,
     )
+    # result = run_task(
+    #     args.task_name,
+    #     args.use_mock,
+    #     args.task_description,
+    #     args.repo_link,
+    #     args.timestamp,
+    # )
     logger.info("task complete.")
 
 

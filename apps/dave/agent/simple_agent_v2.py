@@ -16,6 +16,7 @@ from math import pi
 
 import env
 
+
 class SimpleAgentV2:
     def __init__(self):
         self.api_key = self.get_api_key()
@@ -28,7 +29,7 @@ class SimpleAgentV2:
         self.memory.chat_memory.add_ai_message(
             "You are an expert software engineer. If you solve the problem, you will get a massive bonus. "
         )
-        
+
         self.tools = [RunShellCommandTool()]
 
         self.agent = initialize_agent(
@@ -84,13 +85,14 @@ class CircumferenceTool(BaseTool):
 
     def _arun(self, radius: int):
         raise NotImplementedError("This tool does not support async")
-    
+
+
 class RunShellCommandTool(BaseTool):
     name = "Run bash shell command"
     description = "use this tool when you want to run a bash shell command in the development environment of the repository. Include any 'cd's because you are in the root of the directory"
 
-    def _run(self, bash_shell_command: str) -> :
-        subp = env.run_command(bash_shell_command) 
+    def _run(self, bash_shell_command: str) -> str:
+        subp = env.run_command(bash_shell_command)
         return f"""
         Standard out:
         {str(subp.stdout)}
