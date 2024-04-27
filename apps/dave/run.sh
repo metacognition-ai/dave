@@ -1,6 +1,8 @@
 #!/bin/bash
 
 set -e
+set -o pipefail
+
 dir_name="dave"
 container_name="dave_agent"
 image_name="dave_agent"
