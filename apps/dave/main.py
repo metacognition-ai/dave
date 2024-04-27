@@ -10,16 +10,17 @@ logger.setLevel(logging.INFO)
 
 
 def preprare_env(repo_link):
+    repo_name = repo_link.split("/")[-1].replace(".git", "")
     # Clone the repo
     subprocess.run(
-        f"git clone {repo_link}",
+        f"git clone {repo_link} {repo_name}",
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
         
     subprocess.run(
-        f"cd {repo_link} && docker compose up -d",
+        f"cd {repo_name} && docker compose up -d",
         shell=True,
         stdout=subprocess.PIPE,
         # ignore if fails
@@ -61,7 +62,9 @@ def main():
     logger.info("environment ready.")
 
     logger.info("running agent...")
-    result = run_task(args.task_name, args.use_mock, args.task_description, args.repo_link)
+    result = run_task(
+        args.task_name, args.use_mock, args.task_description, args.repo_link
+    )
     logger.info("task complete.")
 
 
