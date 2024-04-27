@@ -5,9 +5,10 @@ import subprocess
 from agent.prompt import PROMPT
 from agent.simple_agent import SimpleAgent
 
+from utils import process_repository
+
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
 
 def preprare_env(repo_link):
     repo_name = repo_link.split("/")[-1].replace(".git", "")
@@ -28,7 +29,11 @@ def preprare_env(repo_link):
     )
 
 def run_task(task_name, use_mock, task_description, repo_link):
-    agent_prompt = PROMPT.format(task_description=task_description)
+    repo_name = repo_link.split("/")[-1].replace(".git", "")
+    
+    repository_context = process_repository(f"./{repo_name}")
+    
+    agent_prompt = PROMPT.format(task_description=task_description, repository_context=repository_context)
     agent = SimpleAgent(
         prompt=agent_prompt,
         mock_calls=use_mock,

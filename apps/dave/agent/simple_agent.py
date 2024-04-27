@@ -15,7 +15,6 @@ MAX_ITERATIONS = 1
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 class SimpleAgent:
 
     def __init__(self, prompt: str, task_name: str, mock_calls: bool = False):
