@@ -12,6 +12,7 @@ const ChatInterface = () => {
     prompt: '',
     repo_link: '',
   });
+  const [jobID, setJobID] = useState('');
 
   const sendPrompt = () => {
     fetch(api_endpoint + '/process', {
@@ -24,8 +25,16 @@ const ChatInterface = () => {
         task_name: 'Task',
         ...promptsToSend,
       }),
-    });
+    }).then((res) =>
+      res.ok ? res.json().then((data) => setJobID(data)) : console.error(res)
+    );
   };
+
+  useEffect(() => {
+    if (jobID !== '') {
+      console.log(jobID);
+    }
+  }, [jobID]);
 
   useEffect(() => {
     const defaultMessage = {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 
 const MockTerminal = () => {
   const [outputs, setOutputs] = useState([
@@ -15,6 +15,18 @@ const MockTerminal = () => {
   const addOutput = (newOutput) => {
     setOutputs((prevOutputs) => [...prevOutputs, newOutput]);
   };
+
+  useEffect(() => {
+    // setTimeout(() => {
+    //   const responseMessage = {
+    //     id: Date.now(),
+    //     text: `Sounds good. I'm working on it.`,
+    //     sender: 'dave',
+    //   };
+    //   setMessages((prevMessages) => [...prevMessages, responseMessage]);
+    // }, 2500);
+    // sendPrompt();
+  }, [outputs]);
 
   // Effect to make sure the terminal is scrolled to the bottom on new output
   useEffect(() => {
