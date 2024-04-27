@@ -49,7 +49,6 @@ def get_logs(job_id):
 @app.route('/process', methods=['POST'])
 @cross_origin()
 def process():
-    print("hello")
     data = request.json
     job_id =  int(time.time())  # job_id is just timestamp
     prompt = data.get('prompt')
