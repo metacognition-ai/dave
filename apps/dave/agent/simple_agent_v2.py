@@ -8,20 +8,18 @@ from langchain.memory import ChatMessageHistory
 from langchain.memory import ConversationBufferMemory
 from langchain.memory import ConversationBufferWindowMemory
 from langchain.agents import initialize_agent
+from langchain.tools import BaseTool
 
 class SimpleAgentV2:
     def __init__(self):
         self.api_key = self.get_api_key()
         self.llm = ChatOpenAI(openai_api_key=self.api_key, temperature=0, model="gpt-4-turbo")
-        self.llm.invoke(
-            [
-                {"role": "system", "content": "You are a software engineering expert."},
-            ]
-        )
         self.memory = ConversationBufferMemory(
             memory_key='chat_history',
             return_messages=True
         )
+        
+        self.memory.add_message("You are a software engineering expert.")
         
         self.tools = [CircumferenceTool()]
 
