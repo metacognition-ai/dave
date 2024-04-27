@@ -22,8 +22,6 @@ class SimpleAgentV2:
             return_messages=True
         )
         
-        self.memory.add_message("You are a software engineering expert.")
-        
         self.tools = [CircumferenceTool()]
 
         self.agent = initialize_agent(
@@ -41,11 +39,27 @@ class SimpleAgentV2:
         load_dotenv()
         return os.getenv("OPENAI_API_KEY")
     
-    def get_status_update():
+    def get_status_update(self, question):
         # Get message history
-        messages = self.memory.get_messages()
+        chat_history = str(agent.memory.chat_memory)
         
-        prompt = ""
+        prompt = """
+        {question}
+        
+        Give an update on the status of this task, based on the following conversation:
+        {chat_history}
+        """
+        
+        prompt = prompt.format(question=question, chat_history=chat_history)
+        
+        response = self.llm.invoke(
+            [
+                {"role": "system", "content": "You are an excellent communicator and software engineering expert. You provide clear and concise updates on the status of tasks."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+        
+        return response.content
     
     def run(self, prompt):
         return self.agent(prompt)
