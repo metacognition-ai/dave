@@ -15,9 +15,12 @@ MAX_ITERATIONS = 1
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 class SimpleAgent:
 
-    def __init__(self, prompt: str, task_name: str, timestamp: str, mock_calls: bool = False):
+    def __init__(
+        self, prompt: str, task_name: str, timestamp: str, mock_calls: bool = False
+    ):
         self.api_key = self.get_api_key()
         self.mock_calls = mock_calls
         self.prompt = prompt
@@ -66,10 +69,6 @@ class SimpleAgent:
         )
         pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
 
-        response_file = open(os.path.join(log_dir, "response.txt"), "w")
-        command_file = open(os.path.join(log_dir, "command.txt"), "w")
-        result_file = open(os.path.join(log_dir, "result.txt"), "w")
-
         input = self.prompt
 
         curr_iter = 0
@@ -78,18 +77,21 @@ class SimpleAgent:
 
             response = self.talk_to_llm(input)
             if response:
-                response_file.write(iteration_log + response + "\n")
+                with open("response_file.txt", "a") as response_file:
+                    response_file.write(iteration_log + response + "\n")
             logger.info(response)
 
             command = self.parse_response(response)
             result = None
             if command:
-                command_file.write(iteration_log + command + "\n")
+                with open("command_file.txt", "a") as command_file:
+                    command_file.write(iteration_log + command + "\n")
                 result = self.execute_commands(command)
             logger.info(command)
 
             if result:
-                result_file.write(iteration_log + result + "\n")
+                with open("result_file.txt", "a") as result_file:
+                    result_file.write(iteration_log + result + "\n")
             logger.info(result)
 
             input = f"{input}\nObservation: {result}"

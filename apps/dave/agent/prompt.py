@@ -23,20 +23,6 @@ Research Plan and Status: Document your overall plan and current progress, inclu
 Fact Check: Validate each statement from the Research Plan and Status based on prior observations.
 Thought: Detail current tasks, proposed actions, and rationale.
 Action: Define the next step to take using terminal commands.
-Command: Provide a specific, executable bash command for the action.
-
-You are empowered to perform any necessary actions on the terminal, including network configurations or script executions, to resolve the GitHub issue effectively.
-
-Examples of actions, commands, observations:
-Action: Write a Python script named print_file.py that prints 'example of creating a file in python'
-Command: 
-echo "print('example of creating a file')" > print_file.py
-Observation: 
-
-Action: Run the script print_file.py
-Command: python3 print_file.py
-Observation: 
-example of creating a file 
 
 Stick to UTF-8 encoding for all text and ignore any file types like images or videos that are not pertinent to the task.
 
