@@ -8,8 +8,9 @@ from typing import Any
 from dotenv import load_dotenv
 from openai import OpenAI
 
-model = "gpt-4"
+model = "gpt-3.5-turbo"
 MAX_ITERATIONS = 1
+
 
 class SimpleAgent:
 
@@ -94,6 +95,7 @@ class SimpleAgent:
         response_file.close()
         command_file.close()
         result_file.close()
+
 
 agent = SimpleAgent(
     prompt="I am a cybersecurity expert. I need to secure my network.",
