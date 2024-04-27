@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import ChatInterface from '../../components/chat/Chat';
 import LoadingSpinner from '../../components/chat/DaveLoading';
@@ -9,6 +9,8 @@ import WorkspaceComponent from '../../components/workspace-components/WorkspaceC
 const Dave = () => {
   // const [isInitialized, setIsInitialized] = React.useState(true);
   const [jobID, setJobID] = useState('');
+
+  useEffect(() => {}, []);
 
   return (
     <div className='bg-gray-900 flex flex-col min-h-screen text-white'>
