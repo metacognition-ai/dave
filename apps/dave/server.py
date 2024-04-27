@@ -27,11 +27,11 @@ def get_status(job_id):
 @app.route('/<job_id>/logs', methods=['GET'])
 def get_logs(job_id):
     try:
-        with open(f"./agent/logs/{job_id}/response.txt", 'r') as file:
+        with open(f"./agent/logs/gpt-4-turbo/{job_id}/response.txt", 'r') as file:
             response_logs = file.read()
-        with open(f"./agent/logs/{job_id}/command.txt", 'r') as file:
+        with open(f"./agent/logs/gpt-4-turbo/{job_id}/command.txt", 'r') as file:
             command_logs = file.read()
-        with open(f"./agent/logs/{job_id}/result.txt", 'r') as file:
+        with open(f"./agent/logs/gpt-4-turbo/{job_id}/result.txt", 'r') as file:
             result_logs = file.read()
         logs = {
             'response': response_logs,

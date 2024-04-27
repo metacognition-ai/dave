@@ -65,7 +65,7 @@ class SimpleAgent:
 
     def run(self):
         log_dir = os.path.join(
-            "agent", "logs", f"{model}", f"{self.task_name}", f"{self.timestamp}"
+            "agent", "logs", f"{model}", f"{self.timestamp}"
         )
         pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
 
