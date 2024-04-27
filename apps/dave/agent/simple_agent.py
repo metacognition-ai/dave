@@ -9,12 +9,11 @@ import logging
 from dotenv import load_dotenv
 from openai import OpenAI
 
-model = "gpt-3.5-turbo"
+model = "gpt-4-turbo"
 MAX_ITERATIONS = 1
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 class SimpleAgent:
 
