@@ -1,11 +1,21 @@
 import argparse
 import logging
+import subprocess
 
 from agent.prompt import PROMPT
 from agent.simple_agent import SimpleAgent
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+
+def preprare_env():
+    subprocess.run(
+        "docker compose up -d",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
 
 
 def run_task(task_name, use_mock, task_description):
@@ -37,6 +47,10 @@ def main():
         "--repo_link", type=str, required=True, help="Link to the repository"
     )
     args = parser.parse_args()
+
+    logger.info("preparing environment...")
+    preprare_env()
+    logger.info("environment ready.")
 
     logger.info("running agent...")
     result = run_task(args.task_name, args.use_mock, args.task_description)
