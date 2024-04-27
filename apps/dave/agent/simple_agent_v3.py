@@ -15,7 +15,7 @@ from math import pi
 
 import agent.env as env
 
-class SimpleAgentV2:
+class SimpleAgentV3:
     def __init__(self):
         self.api_key = self.get_api_key()
         self.llm = ChatOpenAI(
