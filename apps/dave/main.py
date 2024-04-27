@@ -9,9 +9,13 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-def run_task(task_name, use_mock):
-    agent_prompt = PROMPT.format(task_description="This is a test task")
-    agent = SimpleAgent(prompt=agent_prompt, mock_calls=use_mock, task_name=task_name)
+def run_task(task_name, use_mock, task_description):
+    agent_prompt = PROMPT.format(task_description=task_description)
+    agent = SimpleAgent(
+        prompt=agent_prompt,
+        mock_calls=use_mock,
+        task_name=task_name,
+    )
     response = agent.run()
 
     return response
@@ -25,12 +29,15 @@ def main():
         "--task_name", type=str, required=True, help="Name of the task to run"
     )
     parser.add_argument(
+        "--task_description", type=str, required=True, help="Print the task description"
+    )
+    parser.add_argument(
         "--use_mock", action="store_true", help="Use mock calls for testing"
     )
     args = parser.parse_args()
 
     logger.info("running agent...")
-    result = run_task(args.task_name, args.use_mock)
+    result = run_task(args.task_name, args.use_mock, args.task_description)
     logger.info("task complete.")
 
 

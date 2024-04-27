@@ -39,7 +39,7 @@ class SimpleAgent:
         response = client.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": "You are a cybersecurity expert."},
+                {"role": "system", "content": "You are a software engineering expert."},
                 {"role": "user", "content": input},
             ],
         )
