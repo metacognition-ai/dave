@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dockerd >/tmp/dockerd.log &
+dockerd >/tmp/dockerd.log 2>&1 &
 
 source /venv/bin/activate
 
