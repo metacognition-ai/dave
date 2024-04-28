@@ -86,11 +86,14 @@ class SimpleAgentV2:
 
         return response.content
 
-    def run(self, prompt):
+    def run(self, prompt=None):
 
         pathlib.Path(LOG_DIR).mkdir(parents=True, exist_ok=True)
 
-        output = self.agent(prompt)
+        if prompt is not None:
+            output = self.agent(prompt)
+        else:
+            output = self.agent.run()
 
         log_to_txt(output["output"])
         return output
@@ -136,10 +139,11 @@ class EditFileTool(BaseTool):
         log_to_txt(f"replacing: {full_file_path} - {replace} with {replace_with}")
         env.edit_file(full_file_path, replace, replace_with)
 
+
 class WiresharkTool(BaseTool):
     name = "Wireshark tool"
     description = "use this tool when you want to capture a pcap file and filter it with a specific filter. This tool takes a string filter and returns the pcap file content for that filter. This tool should be used for any network-related bug."
-    
+
     def _run(self, filters: str) -> str:
         env.open_wireshark()
         return env.filter_cap("/tmp/capture.pcap", filters)
