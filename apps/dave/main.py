@@ -67,7 +67,7 @@ def run_v2_task(
         task_description=task_description, repository_context=repository_context
     )
     agent = SimpleAgentV2(
-        # timestamp=timestamp,
+        timestamp=timestamp,
     )
 
     output = agent.run(agent_prompt)

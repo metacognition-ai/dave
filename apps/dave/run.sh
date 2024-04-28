@@ -24,10 +24,10 @@ fi
 
 docker run -it \
 	--privileged \
+	--rm \
 	--name $container_name \
 	-v $(pwd)/agent:/app/agent \
 	-v $(pwd)/main.py:/app/main.py \
+	-v /tmp/docker:/var/lib/docker \
 	--env-file=../../.env \
 	$image_name "$@" | tee "/tmp/$dave_container-latest.log"
-
-docker container rm $container_name >/dev/null

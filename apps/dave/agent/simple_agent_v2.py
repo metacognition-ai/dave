@@ -19,7 +19,8 @@ import agent.env as env
 MAX_ITERATIONS = 3
 
 class SimpleAgentV2:
-    def __init__(self):
+    def __init__(self, timestamp: str):
+        self.timestamp = timestamp
         self.api_key = self.get_api_key()
         self.llm = ChatOpenAI(
             openai_api_key=self.api_key, temperature=0, model="gpt-4-turbo"
@@ -122,7 +123,8 @@ class EditFileTool(BaseTool):
     name = "Edit file tool"
     description = "use this tool when you want to edit a file to fix a bug in your code. This tool takes a string that you want to replace and a string that you want it to be replaced with. use the fill file path as given to you above. this should be the final command you run. MAKE SURE YOU DO AT LEAST ONE EDIT FILE TOOL BEFORE YOU RETURN A FINAL ANSWER. the arguments are full_file_path, replace, and replace with - pass them in as a single string seperated by a single @ character."
 
-    #def _run(self, full_file_path: str, replace: str, replace_with: str):
+    # def _run(self, full_file_path: str, replace: str, replace_with: str):
     def _run(self, path_replace_and_toreplace):
         full_file_path, replace, replace_with = path_replace_and_toreplace.split("@")
         env.edit_file(full_file_path, replace, replace_with)
+
