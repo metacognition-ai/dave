@@ -44,7 +44,7 @@ class SimpleAgentV2:
             "You are an expert software engineer. If you solve the problem, you will get a massive bonus. "
         )
 
-        self.tools = [RunShellCommandTool(), EditFileTool()]
+        self.tools = [RunShellCommandTool(), EditFileTool(), WiresharkTool()]
 
         self.agent = initialize_agent(
             agent="chat-conversational-react-description",
