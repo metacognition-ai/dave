@@ -73,6 +73,8 @@ def run_v2_task(
     output = agent.run(agent_prompt)
     for _ in range(max_iterations):
         prompt = output_to_prompt(output)
+        if prompt and prompt.find("Final Answer") == -1:
+            break
         output = agent.run(prompt)
 
     return

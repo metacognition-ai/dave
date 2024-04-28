@@ -18,9 +18,21 @@ import agent.env as env
 
 MAX_ITERATIONS = 3
 
+
+def set_timestamp(t):
+    global LOG_DIR
+    LOG_DIR = os.path.join("agent", "logs", f"{t}")
+
+
+def log_to_txt(text):
+    with open(os.path.join(LOG_DIR, "out.txt"), "a") as out:
+        out.write("output: " + text + "\n")
+
+
 class SimpleAgentV2:
     def __init__(self, timestamp: str):
-        self.timestamp = timestamp
+        set_timestamp(timestamp)
+        # self.timestamp = timestamp
         self.api_key = self.get_api_key()
         self.llm = ChatOpenAI(
             openai_api_key=self.api_key, temperature=0, model="gpt-4-turbo"
@@ -75,19 +87,12 @@ class SimpleAgentV2:
         return response.content
 
     def run(self, prompt):
-        
+
+        pathlib.Path(LOG_DIR).mkdir(parents=True, exist_ok=True)
+
         output = self.agent(prompt)
-        
-        log_dir = os.path.join(
-            "agent", "logs", f"{self.timestamp}"
-        )
-        
-        pathlib.Path(log_dir).mkdir(parents=True, exist_ok=True)
-        
-        with open(os.path.join(log_dir, "out.txt"), "a") as out:
-            if output['output']:
-                out.write("output: " + output['output'] + "\n")
-        
+
+        log_to_txt(output["output"])
         return output
 
 
@@ -107,6 +112,7 @@ class RunShellCommandTool(BaseTool):
     description = "use this tool when you want to run a bash shell command in the development environment of the repository. Include any 'cd's because you are in the root of the repository directory"
 
     def _run(self, bash_shell_command: str) -> str:
+        log_to_txt(f"command: {bash_shell_command}")
         subp = env.run_command(bash_shell_command)
         return f"""
         Standard out:
@@ -119,6 +125,7 @@ class RunShellCommandTool(BaseTool):
     def _arun(self, bash_shell_command: str):
         raise NotImplementedError
 
+
 class EditFileTool(BaseTool):
     name = "Edit file tool"
     description = "use this tool when you want to edit a file to fix a bug in your code. This tool takes a string that you want to replace and a string that you want it to be replaced with. use the fill file path as given to you above. this should be the final command you run. MAKE SURE YOU DO AT LEAST ONE EDIT FILE TOOL BEFORE YOU RETURN A FINAL ANSWER. the arguments are full_file_path, replace, and replace with - pass them in as a single string seperated by a single @ character."
@@ -126,6 +133,7 @@ class EditFileTool(BaseTool):
     # def _run(self, full_file_path: str, replace: str, replace_with: str):
     def _run(self, path_replace_and_toreplace):
         full_file_path, replace, replace_with = path_replace_and_toreplace.split("@")
+        log_to_txt(f"replacing: {full_file_path} - {replace} with {replace_with}")
         env.edit_file(full_file_path, replace, replace_with)
 
 class WiresharkTool(BaseTool):
@@ -134,4 +142,4 @@ class WiresharkTool(BaseTool):
     
     def run(self, path: str, filters: str) -> str:
         env.open_wireshark()
-        return env.filter_cap('/tmp/capture.pcap', filters)
+        return env.filter_cap("/tmp/capture.pcap", filters)
