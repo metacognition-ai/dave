@@ -16,7 +16,6 @@ def _send_command(command):
         s.connect((HOST, PORT))
         s.setblocking(False)
         s.sendall(command.encode())
-        data = s.recv(1024)
 
 
 def run_command(command: str) -> str:
@@ -29,12 +28,14 @@ def run_command(command: str) -> str:
         stderr=subprocess.PIPE,
     )
 
+
 def edit_file(full_file_path: str, replace: str, replace_with: str):
-        with open(os.path.join(REPO_NAME, full_file_path), 'r', encoding='utf-8') as file:
-            contents = file.read()
-        contents = contents.replace(replace, replace_with)
-        with open(os.path.join(REPO_NAME, full_file_path), 'w', encoding='utf-8') as file:
-            file.write(contents)
+    with open(os.path.join(REPO_NAME, full_file_path), "r", encoding="utf-8") as file:
+        contents = file.read()
+    contents = contents.replace(replace, replace_with)
+    with open(os.path.join(REPO_NAME, full_file_path), "w", encoding="utf-8") as file:
+        file.write(contents)
+
 
 def filter_cap(path: str, filters: str) -> str:
     """
