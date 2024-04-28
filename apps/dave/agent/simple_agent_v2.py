@@ -26,7 +26,7 @@ def set_timestamp(t):
 
 def log_to_txt(text):
     with open(os.path.join(LOG_DIR, "out.txt"), "a") as out:
-        out.write("output: " + text + "\n")
+        out.write(text + "\n")
 
 
 class SimpleAgentV2:

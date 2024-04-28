@@ -3,7 +3,7 @@ import logging
 import subprocess
 
 from agent.env import set_repo_name
-from agent.wire_prompt import PROMPT
+from agent.web_prompt import PROMPT
 from agent.simple_agent import SimpleAgent
 from agent.simple_agent_v2 import SimpleAgentV2
 
@@ -64,7 +64,9 @@ def run_v2_task(
     repository_context = process_repository(f"./{repo_name}")
 
     agent_prompt = PROMPT.format(
-        task_description=task_description, repository_context=repository_context
+        task_description=task_description,
+        repository_context=repository_context,
+        module_name="time",
     )
     agent = SimpleAgentV2(
         timestamp=timestamp,
