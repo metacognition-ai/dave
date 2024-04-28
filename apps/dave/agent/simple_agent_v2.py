@@ -140,6 +140,6 @@ class WiresharkTool(BaseTool):
     name = "Wireshark tool"
     description = "use this tool when you want to capture a pcap file and filter it with a specific filter. This tool takes a string filter and returns the pcap file content for that filter. This tool should be used for any network-related bug."
     
-    def _run(self, path: str, filters: str) -> str:
+    def _run(self, filters: str) -> str:
         env.open_wireshark()
         return env.filter_cap("/tmp/capture.pcap", filters)
