@@ -165,3 +165,4 @@ apps/web/.next/*
 *.txt
 !requirements.txt
 .env
+.DS_Store
