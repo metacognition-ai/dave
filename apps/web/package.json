@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@guardrails-ai/core": "github:guardrails-ai/guardrails-js",
     "@reduxjs/toolkit": "^2.2.3",
     "@thumbtack/thumbprint-react": "^14.18.2",
     "@xterm/addon-fit": "^0.10.0",

@@ -4,6 +4,8 @@ import { VscSparkleFilled, VscCircleFilled } from 'react-icons/vsc';
 import { FaRobot, FaUser } from 'react-icons/fa';
 import { Pill } from '@thumbtack/thumbprint-react';
 
+import { Guard, Validators, exit } from '@guardrails-ai/core';
+
 import { api_endpoint } from '../../api_endpoint';
 
 const ChatInterface = ({ jobID, setJobID, status }) => {
@@ -75,6 +77,23 @@ const ChatInterface = ({ jobID, setJobID, status }) => {
         }));
       }
     }
+  };
+
+  const checkPrompt = (prompt) => {
+    fetch(api_endpoint + '/guardrail', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+      }),
+    }).then((res) =>
+      res.ok
+        ? res.json().then((data) => assert(data.gaurd_val))
+        : console.error(res)
+    );
   };
 
   useEffect(() => {
@@ -153,7 +172,7 @@ const ChatInterface = ({ jobID, setJobID, status }) => {
       </ScrollToBottom>
       <div className='flex items-center px-4 py-2'>
         <input
-          disabled={userMessageCount > 1}
+          // disabled={userMessageCount > 1}
           type='text'
           value={inputMessage}
           onChange={handleInputChange}
@@ -164,7 +183,7 @@ const ChatInterface = ({ jobID, setJobID, status }) => {
           className='bg-gray-800 border border-gray-700 flex-grow focus:outline-none focus:ring-2 focus:ring-blue-600 mr-2 px-4 py-2 rounded-lg text-white'
         />
         <button
-          disabled={userMessageCount > 1}
+          // disabled={userMessageCount > 1}
           onClick={handleSendMessage}
           className={`bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 hover:bg-blue-700 focus:ring-blue-600 font-bold px-4 py-2 rounded-lg text-white`}>
           Send

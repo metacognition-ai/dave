@@ -22,7 +22,7 @@ const Dave = () => {
         const status = jsonData.status;
         setStatus(status);
       } catch (error) {
-        console.error('Failed to fetch data:', error);
+        // console.error('Failed to fetch data:', error);
       }
     };
 
