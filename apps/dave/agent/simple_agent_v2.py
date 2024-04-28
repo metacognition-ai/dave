@@ -128,3 +128,10 @@ class EditFileTool(BaseTool):
         full_file_path, replace, replace_with = path_replace_and_toreplace.split("@")
         env.edit_file(full_file_path, replace, replace_with)
 
+class WiresharkTool(BaseTool):
+    name = "Wireshark tool"
+    description = "use this tool when you want to capture a pcap file and filter it with a specific filter. This tool takes a string filter and returns the pcap file content for that filter. This tool should be used for any network-related bug."
+    
+    def run(self, path: str, filters: str) -> str:
+        env.open_wireshark()
+        return env.filter_cap('/tmp/capture.pcap', filters)
