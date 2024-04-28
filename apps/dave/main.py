@@ -3,7 +3,7 @@ import logging
 import subprocess
 
 from agent.env import set_repo_name
-from agent.prompt import PROMPT
+from agent.wire_prompt import PROMPT
 from agent.simple_agent import SimpleAgent
 from agent.simple_agent_v2 import SimpleAgentV2
 
