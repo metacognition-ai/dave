@@ -16,6 +16,10 @@
   }
 }
 
+nextjs-portal {
+  display: none;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

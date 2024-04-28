@@ -4,8 +4,6 @@ import { VscSparkleFilled, VscCircleFilled } from 'react-icons/vsc';
 import { FaRobot, FaUser } from 'react-icons/fa';
 import { Pill } from '@thumbtack/thumbprint-react';
 
-import { Guard, Validators, exit } from '@guardrails-ai/core';
-
 import { api_endpoint } from '../../api_endpoint';
 
 const ChatInterface = ({ jobID, setJobID, status }) => {

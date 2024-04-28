@@ -6,8 +6,6 @@ from flask_cors import CORS, cross_origin
 from guardrails import Guard
 from guardrails.hub import (
     GibberishText,
-    NSFWText,
-    ProvenanceEmbeddings
 )
 
 app = Flask(__name__)
@@ -71,17 +69,17 @@ def process():
 
 @app.route('/guardrail', methods=['POST'])
 @cross_origin()
-def process():
+def validate():
     data = request.json
     prompt = data.get('prompt')
 
     guard = Guard().use_many(
         GibberishText(),
-        NSFWText(),
-        ProvenanceEmbeddings(
-            threshold=0.8,
-            validation_method=sentence
-        )
+        # NSFWText(),
+        # ProvenanceEmbeddings(
+        #     threshold=0.8,
+        #     validation_method=sentence
+        # )
     )
 
     guard_res = guard.validate(prompt)

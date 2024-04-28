@@ -4,6 +4,8 @@ import { api_endpoint } from '../../api_endpoint';
 const Terminal = ({ jobID }) => {
   const [outputs, setOutputs] = useState(['$ ']);
 
+  //const jobID = '23132131';
+
   // Function to add new output lines
   //   const addOutput = (newOutput) => {
   //     setOutputs((prevOutputs) => [...prevOutputs, newOutput]);
@@ -20,9 +22,9 @@ const Terminal = ({ jobID }) => {
         const response = await fetch(api_endpoint + '/' + jobID + '/logs');
         var jsonData = await response.json();
 
-        jsonData = jsonData.replaceAll('command: ', '$ ');
-        jsonData = jsonData.replaceAll('response: ', '');
-        setJsonData = jsonData.split('\n');
+        var logs = jsonData.response;
+
+        var setJsonData = logs.split('\n');
 
         setOutputs(setJsonData);
       } catch (error) {
@@ -30,8 +32,8 @@ const Terminal = ({ jobID }) => {
       }
     };
 
-    fetchData();
-    const intervalId = setInterval(fetchData, 5000);
+    if (jobID !== '') fetchData();
+    const intervalId = setInterval(fetchData, 1000);
 
     return () => clearInterval(intervalId);
   }, [jobID]);

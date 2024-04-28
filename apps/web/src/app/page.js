@@ -50,7 +50,7 @@ export default function Home() {
                 window.location.href = '/dave';
               }}
               style={{ animation: 'pulse 2s infinite' }}>
-              Get Started
+              Experience
             </button>
           </div>
         </div>
