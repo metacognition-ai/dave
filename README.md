@@ -4,5 +4,6 @@ Dave is a better Devin (software engineering agent) who has the ability to inter
 
 Won 1st and "Most Impressive Technical Feat" at OpenAI x PearVC SF hackathon in April 2024.
 
-https://github.com/metacognition-ai/dave/assets/87954127/1959e723-e721-41f6-9ad2-d73b766a792f
+
+https://github.com/metacognition-ai/dave/assets/87954127/2d9c256b-1707-49a4-bd37-cd8eda68622a
 
